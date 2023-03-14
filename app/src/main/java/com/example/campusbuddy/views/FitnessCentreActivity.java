@@ -36,6 +36,7 @@ public class FitnessCentreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityFitnessCentreBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle("Fitness Centres");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
