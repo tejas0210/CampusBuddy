@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "570663287255",
+    "project_id": "campus-buddy-8740d",
+    "storage_bucket": "campus-buddy-8740d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570663287255:android:708890a674b1ebcd103392",
+        "android_client_info": {
+          "package_name": "com.example.campusbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570663287255-1ihc5hoco4qosa66r4o17tt7l6v4fotm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvlYSPEzUWGoC_tEQMFlzyZFYzvEZ9yLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570663287255-1ihc5hoco4qosa66r4o17tt7l6v4fotm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
