@@ -27,12 +27,20 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="45dp" />
-
-    <ImageView
-        android:id="@+id/image1"
+    <TextView
+        android:id="@+id/tv_location"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/tv_exactLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
+
+
     <ImageView
         android:id="@+id/image2"
         android:layout_width="match_parent"
