@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingTop="7dp"
+    android:paddingRight="13dp"
+    android:paddingLeft="13dp"
     tools:context=".views.ServiceDetailsActivity">
 
     <EditText

@@ -1,10 +1,13 @@
 package com.example.campusbuddy.views;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -34,6 +37,11 @@ public class FitnessCentreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#303030"));
+        actionBar.setBackgroundDrawable(colorDrawable);
         binding = ActivityFitnessCentreBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setTitle("Fitness Centres");
