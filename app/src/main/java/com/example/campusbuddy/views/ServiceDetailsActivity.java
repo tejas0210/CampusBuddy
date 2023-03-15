@@ -94,12 +94,12 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         reference = database.getReference("");
 
 
-//        binding.btnLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(ServiceDetailsActivity.this, MapsActivity.class));
-//            }
-//        });
+        binding.btnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ServiceDetailsActivity.this, MapsActivity.class));
+            }
+        });
 
 /*
         binding.btnLocation.setOnClickListener(new View.OnClickListener() {
