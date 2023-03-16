@@ -36,6 +36,8 @@ public class FitnessAdapter extends RecyclerView.Adapter<FitnessAdapter.myViewHo
 
     @Override
     public void onBindViewHolder(@NonNull FitnessAdapter.myViewHolder holder, int position) {
+
+
         ServiceModel serviceModel = list.get(position);
         holder.sName.setText(serviceModel.getServiceName());
         holder.price.setText(serviceModel.getPrice());
