@@ -13,4 +13,12 @@
         <item name="android:statusBarColor">@color/arsenic</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.CampusBuddy1" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/arsenic</item>
+
+    </style>
 </resources>
