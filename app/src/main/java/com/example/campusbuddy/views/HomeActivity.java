@@ -16,7 +16,7 @@ import com.example.campusbuddy.MainActivity;
 import com.example.campusbuddy.R;
 import com.example.campusbuddy.databinding.ActivityHomeBinding;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     ActivityHomeBinding binding;
 
@@ -30,12 +30,15 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.fitness.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, FitnessCentreActivity.class));
-            }
-        });
+        binding.fitness.setOnClickListener(this::onClick);
+        binding.Inn.setOnClickListener(this::onClick);
+        binding.transport.setOnClickListener(this::onClick);
+        binding.collegeClubs.setOnClickListener(this::onClick);
+        binding.playArea.setOnClickListener(this::onClick);
+        binding.food.setOnClickListener(this::onClick);
+        binding.lifestyle.setOnClickListener(this::onClick);
+        binding.newOpenings.setOnClickListener(this::onClick);
+
 
 
 //        SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
@@ -54,6 +57,38 @@ public class HomeActivity extends AppCompatActivity {
 //            Intent intent = new Intent(this, MainActivity.class);
 //            startActivity(intent);
 //        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fitness:
+                startActivity(new Intent(HomeActivity.this,FitnessCentreActivity.class));
+                break;
+            case R.id.Inn:
+                startActivity(new Intent(HomeActivity.this,FitnessCentreActivity.class));
+                break;
+            case R.id.transport:
+                startActivity(new Intent(HomeActivity.this,FitnessCentreActivity.class));
+                break;
+            case R.id.food:
+                startActivity(new Intent(HomeActivity.this,FitnessCentreActivity.class));
+                break;
+            case R.id.newOpenings:
+                startActivity(new Intent(HomeActivity.this,FitnessCentreActivity.class));
+                break;
+            case R.id.lifestyle:
+                startActivity(new Intent(HomeActivity.this,FitnessCentreActivity.class));
+                break;
+            case R.id.playArea:
+                startActivity(new Intent(HomeActivity.this,FitnessCentreActivity.class));
+                break;
+            case R.id.collegeClubs:
+                startActivity(new Intent(HomeActivity.this,FitnessCentreActivity.class));
+                break;
+
+        }
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,4 +110,6 @@ public class HomeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }
