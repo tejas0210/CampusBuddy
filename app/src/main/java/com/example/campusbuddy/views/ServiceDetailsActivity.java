@@ -1,6 +1,7 @@
 package com.example.campusbuddy.views;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,15 +10,24 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.campusbuddy.adapters.ImageAdapter;
 import com.example.campusbuddy.databinding.ActivityServiceDetailsBinding;
 import com.example.campusbuddy.model.ServiceModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +37,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class ServiceDetailsActivity extends AppCompatActivity {
     ActivityServiceDetailsBinding binding;
     FirebaseUser user;
@@ -34,6 +46,12 @@ public class ServiceDetailsActivity extends AppCompatActivity {
     DatabaseReference reference;
     LocationManager locationManager;
     private static final int REQUEST_LOCATION = 1;
+    private static final int READ_PERMISSION = 101;
+
+    ImageAdapter adapter;
+
+
+    ArrayList<Uri> list = new ArrayList<Uri>();
     String latitude, longitude;
 
     @Override
@@ -48,6 +66,11 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         binding = ActivityServiceDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        adapter = new ImageAdapter(list);
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
+        binding.recyclerView.setAdapter(adapter);
+
         //getting users location...
 
         ActivityCompat.requestPermissions( this,
@@ -59,7 +82,49 @@ public class ServiceDetailsActivity extends AppCompatActivity {
                 } else {
                     getLocation();
                 }
+
+
+                if (ContextCompat.checkSelfPermission(ServiceDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions( this,
+                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION);
+                }
+
+                binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true );
+                        }
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture "), 1);
+                    }
+                });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK){
+            if (data.getClipData()!=null){
+                int x = data.getClipData().getItemCount();
+
+                for (int i=0;i<x;i++){
+                    list.add(data.getClipData().getItemAt(i).getUri());
+                }
+                adapter.notifyDataSetChanged();
+                binding.imgCount.setText("Photos ("+list.size()+")");
+            }
+            else if(data.getData() != null){
+                String imageUrl = data.getData().getPath();
+                list.add(Uri.parse(imageUrl));
+            }
+
+        }
+    }
+
     private void OnGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
