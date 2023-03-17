@@ -62,7 +62,11 @@ public class FitnessCentreActivity extends AppCompatActivity {
 
 
         Toast.makeText(this, "Here now", Toast.LENGTH_SHORT).show();
-        reference = database.getReference("Gym Service");
+
+
+        // BELOW CODE IS TO RETRIEVE DATA FROM FIREBASE DATABASE
+
+        reference = database.getReference("Gym");
         list = new ArrayList<>();
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -83,5 +87,8 @@ public class FitnessCentreActivity extends AppCompatActivity {
                 Toast.makeText(FitnessCentreActivity.this, "Error!!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        //FINISH
+
     }
 }
