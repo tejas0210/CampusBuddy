@@ -36,8 +36,11 @@
     <color name="redPrimary">#ED2736</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white2">#F0FFFFFF</color>
+    <color name="white3">#FDFDFF</color>
     <color name="redSecondary">#6C0101</color>
     <color name="bluePrimary">#2D4BEF</color>
     <color name="blueSecondary">#379EF1</color>
     <color name="arsenic">#303030</color>
+    <color name="splashScreen">#C10504</color>
 </resources>

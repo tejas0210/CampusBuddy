@@ -9,8 +9,7 @@ import android.os.Bundle;
 
 import com.example.campusbuddy.databinding.ActivityInnBinding;
 
-public class InnActivity extends AppCompatActivity {
-
+public class FoodActivity extends AppCompatActivity {
     ActivityInnBinding binding;
 
     @Override
@@ -20,9 +19,8 @@ public class InnActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#303030"));
         actionBar.setBackgroundDrawable(colorDrawable);
-        setTitle("INN");
+        setTitle("Food");
         binding = ActivityInnBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
     }
 }

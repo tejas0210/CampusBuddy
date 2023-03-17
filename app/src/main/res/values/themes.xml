@@ -11,14 +11,16 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/arsenic</item>
+        <item name="android:windowLightStatusBar">false</item>
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.CampusBuddy1" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Theme.CampusBuddy1" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/arsenic</item>
+        <item name="android:statusBarColor">@color/white3</item>
+        <item name="android:windowLightStatusBar">true</item>
 
     </style>
 </resources>

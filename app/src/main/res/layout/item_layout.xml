@@ -32,29 +32,29 @@
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="25dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
                 android:text="TextView"
                 android:textStyle="bold"
                 android:textAllCaps="true"
-                android:paddingTop="7dp"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="5dp">
 
-                <ImageView
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Rs."
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
                     android:paddingLeft="20dp"
-                    android:paddingTop="8dp"
-                    android:paddingRight="-4dp"
-                    android:paddingBottom="7dp"
-                    android:src="@drawable/rupee"></ImageView>
+                    ></TextView>
 
                 <TextView
                     android:id="@+id/tv_price"
@@ -63,11 +63,10 @@
                     android:gravity="center_vertical"
                     android:text="TextView"
                     android:textStyle="bold"
-                    android:textAllCaps="true"
-                    android:paddingTop="7dp"
-                    android:paddingBottom="7dp"
+                    android:layout_marginLeft="1dp"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
 

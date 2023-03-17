@@ -1,14 +1,18 @@
 package com.example.campusbuddy.views;
 
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.campusbuddy.MainActivity;
 import com.example.campusbuddy.R;
 import com.example.campusbuddy.adapters.FitnessAdapter;
 import com.example.campusbuddy.databinding.ActivityFitnessCentreBinding;
@@ -37,12 +41,16 @@ public class FitnessCentreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityFitnessCentreBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setTitle("Fitness Centres");
 
+        Window window = FitnessCentreActivity.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(FitnessCentreActivity.this, R.color.arsenic));
         // assigning ID of the toolbar to a variable
         Toolbar toolbar = findViewById(R.id.toolbar);
         // using toolbar as ActionBar
         setSupportActionBar(toolbar);
+        setTitle("Fitness Centres");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
