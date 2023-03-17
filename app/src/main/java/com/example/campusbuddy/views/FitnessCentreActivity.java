@@ -12,9 +12,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.campusbuddy.MainActivity;
 import com.example.campusbuddy.R;
-import com.example.campusbuddy.adapters.FitnessAdapter;
+import com.example.campusbuddy.adapters.ServiceAdapter;
 import com.example.campusbuddy.databinding.ActivityFitnessCentreBinding;
 import com.example.campusbuddy.model.ServiceModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +32,7 @@ public class FitnessCentreActivity extends AppCompatActivity {
     DatabaseReference reference;
     FirebaseUser user;
     FirebaseDatabase database;
-    FitnessAdapter adapter;
+    ServiceAdapter adapter;
 
 
     @Override
@@ -78,7 +77,7 @@ public class FitnessCentreActivity extends AppCompatActivity {
                     list.add(service);
 
                 }
-                adapter = new FitnessAdapter(list, FitnessCentreActivity.this);
+                adapter = new ServiceAdapter(list, FitnessCentreActivity.this);
                 binding.recyclerView.setAdapter(adapter);
             }
 

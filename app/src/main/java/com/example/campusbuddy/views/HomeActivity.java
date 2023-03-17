@@ -118,7 +118,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.addService:
-                startActivity(new Intent(this, NewServiceActivity.class));
+                startActivity(new Intent(this, ServiceDetailsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

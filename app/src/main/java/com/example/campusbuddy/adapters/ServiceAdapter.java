@@ -9,33 +9,30 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.animation.content.Content;
 import com.example.campusbuddy.R;
 import com.example.campusbuddy.model.ServiceModel;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-public class FitnessAdapter extends RecyclerView.Adapter<FitnessAdapter.myViewHolder> {
+public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.myViewHolder> {
 
     ArrayList<ServiceModel> list = new ArrayList<>();
     Context context;
 
-    public FitnessAdapter(ArrayList<ServiceModel> list, Context context) {
+    public ServiceAdapter(ArrayList<ServiceModel> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public FitnessAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ServiceAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
         return new myViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FitnessAdapter.myViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ServiceAdapter.myViewHolder holder, int position) {
 
 
         ServiceModel serviceModel = list.get(position);
