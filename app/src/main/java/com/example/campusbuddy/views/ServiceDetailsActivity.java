@@ -15,6 +15,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +30,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.campusbuddy.R;
 import com.example.campusbuddy.adapters.ImageAdapter;
 import com.example.campusbuddy.databinding.ActivityServiceDetailsBinding;
 import com.example.campusbuddy.model.ServiceModel;
@@ -53,6 +57,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
 
     ArrayList<Uri> list = new ArrayList<Uri>();
     String latitude, longitude;
+    String serviceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +71,37 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         binding = ActivityServiceDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        //IMAGE ADAPTER CODE BELOW...
         adapter = new ImageAdapter(list);
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
+        binding.recyclerView.addItemDecoration(dividerItemDecoration);
         binding.recyclerView.setAdapter(adapter);
+        // FINSIH
+
+
+
+        // DROPDOWN SPINNER CODE BELOW....
+        Spinner spinner = findViewById(R.id.my_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.my_spinner_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                serviceType = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+        //FINISH
+
+
+
 
         //getting users location...
 
@@ -95,6 +127,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
                         Intent intent = new Intent();
                         intent.setType("image/*");
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
+                            intent.putExtra(Intent.ACTION_PICK, true);
                             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true );
                         }
                         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -115,13 +148,13 @@ public class ServiceDetailsActivity extends AppCompatActivity {
                     list.add(data.getClipData().getItemAt(i).getUri());
                 }
                 adapter.notifyDataSetChanged();
+
                 binding.imgCount.setText("Photos ("+list.size()+")");
             }
             else if(data.getData() != null){
                 String imageUrl = data.getData().getPath();
                 list.add(Uri.parse(imageUrl));
             }
-
         }
     }
 
@@ -237,8 +270,8 @@ public class ServiceDetailsActivity extends AppCompatActivity {
                 String userId = user.getUid();
                 String sName = binding.etName.getText().toString();
                 String price = binding.etPrice.getText().toString();
-                ServiceModel service = new ServiceModel(userId, sName, price);
-                reference.child("Gym Service").push().setValue(service).addOnCompleteListener(new OnCompleteListener<Void>() {
+                ServiceModel service = new ServiceModel(userId,serviceType ,sName, price);
+                reference.child(serviceType).push().setValue(service).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
@@ -251,4 +284,6 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

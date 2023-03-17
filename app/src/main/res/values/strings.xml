@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Campus Buddy</string>
+    <string name="choose_option">Choose Option</string>
+
+    <string-array name="my_spinner_options">
+        <item>Gym </item>
+        <item>Cafe </item>
+        <item>Inn</item>
+        <item>Play Area</item>
+        <item>Mess</item>
+        <item>Transport</item>
+    </string-array>
 </resources>

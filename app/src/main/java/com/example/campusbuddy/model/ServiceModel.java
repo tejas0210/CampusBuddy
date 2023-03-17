@@ -2,6 +2,8 @@ package com.example.campusbuddy.model;
 
 public class ServiceModel {
     String userId;
+
+    String serviceType;
     String serviceName;
     String price;
 
@@ -9,10 +11,20 @@ public class ServiceModel {
     public ServiceModel(){
 
     }
-    public ServiceModel(String userId, String serviceName, String price) {
+    public ServiceModel(String userId, String serviceType, String serviceName, String price) {
         this.userId = userId;
         this.serviceName = serviceName;
         this.price = price;
+        this.serviceType = serviceType;
+
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 
     public String getUserId() {
