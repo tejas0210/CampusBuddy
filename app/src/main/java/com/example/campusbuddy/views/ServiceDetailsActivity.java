@@ -19,6 +19,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -35,15 +37,20 @@ import com.example.campusbuddy.adapters.ImageAdapter;
 import com.example.campusbuddy.databinding.ActivityServiceDetailsBinding;
 import com.example.campusbuddy.model.ServiceModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
 public class ServiceDetailsActivity extends AppCompatActivity {
+    private static final int PICK_IMAGE_REQUEST_CODE = 200;
     ActivityServiceDetailsBinding binding;
     FirebaseUser user;
     FirebaseDatabase database;
@@ -53,6 +60,8 @@ public class ServiceDetailsActivity extends AppCompatActivity {
     private static final int READ_PERMISSION = 101;
 
     ImageAdapter adapter;
+    private FirebaseStorage storage;
+
 
 
     ArrayList<Uri> list = new ArrayList<Uri>();
@@ -71,15 +80,26 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         binding = ActivityServiceDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        storage = FirebaseStorage.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference("images");
 
-        //IMAGE ADAPTER CODE BELOW...
+
+
+
+        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickImage();
+            }
+        });
+
+//        IMAGE ADAPTER CODE BELOW...
         adapter = new ImageAdapter(list);
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
         binding.recyclerView.addItemDecoration(dividerItemDecoration);
         binding.recyclerView.setAdapter(adapter);
         // FINSIH
-
 
 
         // DROPDOWN SPINNER CODE BELOW....
@@ -101,62 +121,26 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         //FINISH
 
 
-
-
         //getting users location...
 
-        ActivityCompat.requestPermissions( this,
-                new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    OnGPS();
-                } else {
-                    getLocation();
-                }
-
-
-                if (ContextCompat.checkSelfPermission(ServiceDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions( this,
-                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION);
-                }
-
-                binding.btnAdd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
-                            intent.putExtra(Intent.ACTION_PICK, true);
-                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true );
-                        }
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent, "Select Picture "), 1);
-                    }
-                });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK){
-            if (data.getClipData()!=null){
-                int x = data.getClipData().getItemCount();
-
-                for (int i=0;i<x;i++){
-                    list.add(data.getClipData().getItemAt(i).getUri());
-                }
-                adapter.notifyDataSetChanged();
-
-                binding.imgCount.setText("Photos ("+list.size()+")");
-            }
-            else if(data.getData() != null){
-                String imageUrl = data.getData().getPath();
-                list.add(Uri.parse(imageUrl));
-            }
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            OnGPS();
+        } else {
+            getLocation();
         }
+
+
+        if (ContextCompat.checkSelfPermission(ServiceDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION);
+        }
+
     }
+
 
     private void OnGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -208,7 +192,96 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             }
         });
 
-/*
+
+        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userId = user.getUid();
+                String sName = binding.etName.getText().toString();
+                String price = binding.etPrice.getText().toString();
+                ServiceModel service = new ServiceModel(userId,serviceType ,sName, price);
+                reference.child(serviceType).push().setValue(service).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            for (Uri imageUri : list) {
+                                // Create a unique filename for each image using a timestamp
+                                String filename = System.currentTimeMillis() + ".jpg";
+
+                                // Create a reference to the Firebase Storage location where the image will be stored
+                                StorageReference storageReference = storage.getReference().child(serviceType).child(filename);
+
+                                // Upload the image to Firebase Storage
+                                storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        // Get the download URL for the image
+                                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri downloadUrl) {
+                                                // Save the download URL to the Firebase Realtime Database
+                                                reference.child("Images").push().setValue(downloadUrl.toString());
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+
+                            Toast.makeText(ServiceDetailsActivity.this, "Added Successfully!!", Toast.LENGTH_SHORT).show();
+                            binding.etName.setText("");
+                            binding.etPrice.setText("");
+                            list.clear();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+
+    private void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            if (data.getClipData() != null) {
+                // Multiple images selected
+                int count = data.getClipData().getItemCount();
+                for (int i = 0; i < count; i++) {
+                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                    list.add(imageUri);
+                    // Do something with the image URI, such as load the image into an ImageView
+                }
+//                adapter.notifyDataSetChanged();
+                binding.imgCount.setText("Photos ("+list.size()+")");
+
+            } else if (data.getData() != null) {
+                // Single image selected
+                Uri imageUri = data.getData();
+                list.add(imageUri);
+
+//                adapter.notifyDataSetChanged();
+                binding.imgCount.setText("Photos ("+list.size()+")");
+                // Do something with the image URI, such as load the image into an ImageView
+            }
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    //Code for setting location on map
+    /*
         binding.btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,30 +333,4 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         });
 
  */
-
-
-
-
-        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String userId = user.getUid();
-                String sName = binding.etName.getText().toString();
-                String price = binding.etPrice.getText().toString();
-                ServiceModel service = new ServiceModel(userId,serviceType ,sName, price);
-                reference.child(serviceType).push().setValue(service).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ServiceDetailsActivity.this, "Added Successfully!!", Toast.LENGTH_SHORT).show();
-                            binding.etName.setText("");
-                            binding.etPrice.setText("");
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-
 }
