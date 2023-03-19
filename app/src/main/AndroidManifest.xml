@@ -24,13 +24,17 @@
             android:exported="false" />
         <activity
             android:name=".views.LifestyleActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".views.NewOpeningsActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".views.FoodActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
@@ -38,10 +42,19 @@
             android:exported="false" />
         <activity
             android:name=".views.TransportActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".views.InnActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".views.FitnessCentreActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -50,11 +63,6 @@
         <activity
             android:name=".views.MapsActivity"
             android:exported="false" />
-        <activity
-            android:name=".views.FitnessCentreActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".views.ServiceDetailsActivity"
             android:exported="false" />

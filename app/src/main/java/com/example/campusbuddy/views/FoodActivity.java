@@ -43,6 +43,9 @@ public class FoodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityFoodBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         Window window = FoodActivity.this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -53,8 +56,6 @@ public class FoodActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Food");
 
-        binding = ActivityFoodBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
@@ -65,7 +66,7 @@ public class FoodActivity extends AppCompatActivity {
 //        binding.recyclerView.addItemDecoration(dividerItemDecoration);
 
         // Retrieve Cafe data from FirebaseDatabase
-        reference = database.getReference("Cafe");
+        reference = database.getReference("Food");
         list = new ArrayList<>();
 
         reference.addValueEventListener(new ValueEventListener() {

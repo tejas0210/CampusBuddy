@@ -56,16 +56,16 @@ public class FitnessCentreActivity extends AppCompatActivity {
 
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        binding.recyclerView.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+//        binding.recyclerView.addItemDecoration(dividerItemDecoration);
 
-        Toast.makeText(this, "Here now", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Here now", Toast.LENGTH_SHORT).show();
 
 
 
-        // BELOW CODE IS TO RETRIEVE DATA FROM FIREBASE DATABASE
+        // Retrieve Gym data from FirebaseDatabase
 
-        reference = database.getReference("Gym");
+        reference = database.getReference("Fitness Centre");
         list = new ArrayList<>();
 
         reference.addValueEventListener(new ValueEventListener() {

@@ -9,12 +9,13 @@
     android:paddingRight="13dp"
     android:paddingLeft="13dp"
     tools:context=".views.ServiceDetailsActivity">
+
+
     <Spinner
         android:id="@+id/my_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:prompt="@string/choose_option" />
-
 
     <EditText
         android:layout_marginTop="30dp"
