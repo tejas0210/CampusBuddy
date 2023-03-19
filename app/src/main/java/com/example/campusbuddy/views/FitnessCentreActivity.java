@@ -59,8 +59,8 @@ public class FitnessCentreActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         binding.recyclerView.addItemDecoration(dividerItemDecoration);
 
-
         Toast.makeText(this, "Here now", Toast.LENGTH_SHORT).show();
+
 
 
         // BELOW CODE IS TO RETRIEVE DATA FROM FIREBASE DATABASE
@@ -86,8 +86,6 @@ public class FitnessCentreActivity extends AppCompatActivity {
                 Toast.makeText(FitnessCentreActivity.this, "Error!!", Toast.LENGTH_SHORT).show();
             }
         });
-
         //FINISH
-
     }
 }

@@ -1,11 +1,16 @@
 package com.example.campusbuddy.model;
 
+import android.net.Uri;
+
+import java.util.ArrayList;
+
 public class ServiceModel {
     String userId;
 
     String serviceType;
     String serviceName;
     String price;
+    ArrayList<Uri> list;
 
 
     public ServiceModel(){
@@ -17,6 +22,13 @@ public class ServiceModel {
         this.price = price;
         this.serviceType = serviceType;
 
+    }
+    public ServiceModel(String userId, String serviceType, String serviceName, String price, ArrayList<Uri> list) {
+        this.userId = userId;
+        this.serviceName = serviceName;
+        this.price = price;
+        this.serviceType = serviceType;
+        this.list = list;
     }
 
     public String getServiceType() {
@@ -49,5 +61,13 @@ public class ServiceModel {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public ArrayList<Uri> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<Uri> list) {
+        this.list = list;
     }
 }

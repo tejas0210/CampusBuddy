@@ -1,16 +1,16 @@
 package com.example.campusbuddy.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.campusbuddy.R;
 import com.example.campusbuddy.model.ServiceModel;
+import com.example.campusbuddy.views.Fitness_Data_Activity;
 
 import java.util.ArrayList;
 
@@ -38,6 +38,13 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.myViewHo
         ServiceModel serviceModel = list.get(position);
         holder.sName.setText(serviceModel.getServiceName());
         holder.price.setText(serviceModel.getPrice());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, Fitness_Data_Activity.class));
+            }
+        });
 
     }
 
