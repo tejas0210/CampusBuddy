@@ -62,16 +62,9 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
     FirebaseDatabase database;
     private Bitmap bitmap;
     DatabaseReference reference;
-//    LocationManager locationManager;
-//    private static final int REQUEST_LOCATION = 1;
-//    private static final int READ_PERMISSION = 101;
 
-    ImageAdapter adapter;
+    Uri chosenImage;
     private FirebaseStorage storage;
-
-
-    ArrayList<Uri> list = new ArrayList<Uri>();
-    //    String latitude, longitude;
     String serviceType;
 
     @Override
@@ -90,8 +83,10 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
         setTitle("Register Yourself");
 
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
-        reference = FirebaseDatabase.getInstance().getReference("images");
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference();
 
 
 
@@ -122,6 +117,7 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
 
     }
 
+    // Image Selection Code
     private void selectImage(){
         if(Build.VERSION.SDK_INT<23){
             getChosenImage();
@@ -155,7 +151,7 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
 
         if(requestCode==1000){
             if(resultCode==RESULT_OK && data!=null){
-                Uri chosenImage = data.getData();
+                chosenImage = data.getData();
                 try{
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),chosenImage);
                     binding.coverImage.setImageBitmap(bitmap);
@@ -174,8 +170,36 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
         switch (view.getId()){
             case R.id.coverImage:
                 selectImage();
+            case R.id.btn_Submit:
+                btnSubmit();
         }
     }
+
+
+
+
+    //data submission code
+    private void btnSubmit(){
+        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userId = user.getUid();
+                String sName = binding.etName.getText().toString();
+                String price = binding.etPrice.getText().toString();
+                String location = binding.edtLocation.getText().toString();
+                Uri imageUri = chosenImage;
+                ServiceModel service = new ServiceModel(userId,serviceType ,sName, price, imageUri,location);
+                reference.child(serviceType).push().setValue(service).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ServiceDetailsActivity.this, "Added Successfully!!", Toast.LENGTH_SHORT).show();
+                            binding.etName.setText("");
+                            binding.etPrice.setText("");
+                        }
+                    }
+                });
+            }
+        });
+    }
 }
-
-
