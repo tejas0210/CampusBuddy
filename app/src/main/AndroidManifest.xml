@@ -21,6 +21,8 @@
             android:exported="false" />
         <activity
             android:name=".views.PlayAreaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".views.LifestyleActivity"
@@ -39,7 +41,9 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".views.CollegeClubsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".views.TransportActivity"
             android:exported="true"
