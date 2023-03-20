@@ -63,7 +63,7 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
     private Bitmap bitmap;
     DatabaseReference reference;
 
-    Uri chosenImage;
+    Uri selectedImageUri;
     private FirebaseStorage storage;
     String serviceType;
 
@@ -118,50 +118,27 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
     }
 
     // Image Selection Code
-    private void selectImage(){
-        if(Build.VERSION.SDK_INT<23){
-            getChosenImage();
-        }
-        else if(Build.VERSION.SDK_INT>=23){
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1000);
-            }
-            else{
-                getChosenImage();
-            }
-        }
-    }
-    private void getChosenImage(){
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent,1000);
-    }
+    void imageChooser() {
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==1000 && grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-            selectImage();
-        }
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), 2000);
     }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==1000){
-            if(resultCode==RESULT_OK && data!=null){
-                chosenImage = data.getData();
-                try{
-                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),chosenImage);
-                    binding.coverImage.setImageBitmap(bitmap);
-                }
-                catch(Exception e){
-                    e.printStackTrace();
+        if (resultCode == RESULT_OK) {
+
+            if (requestCode == 2000) {
+                selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
+                    binding.coverImage.setImageURI(selectedImageUri);
                 }
             }
         }
     }
+
 
 
 
@@ -169,7 +146,8 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.coverImage:
-                selectImage();
+                imageChooser();
+                Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
             case R.id.btn_Submit:
                 btnSubmit();
         }
@@ -187,8 +165,7 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
                 String sName = binding.etName.getText().toString();
                 String price = binding.etPrice.getText().toString();
                 String location = binding.edtLocation.getText().toString();
-                Uri imageUri = chosenImage;
-                ServiceModel service = new ServiceModel(userId,serviceType ,sName, price, imageUri,location);
+                ServiceModel service = new ServiceModel(userId,serviceType ,sName, price, selectedImageUri.toString(),location);
                 reference.child(serviceType).push().setValue(service).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
