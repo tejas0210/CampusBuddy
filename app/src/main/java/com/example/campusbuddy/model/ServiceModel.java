@@ -9,7 +9,7 @@ public class ServiceModel {
     String serviceType;
     String serviceName;
     String price;
-    Uri imageUri;
+    String imageUri;
     String location;
 
 
@@ -27,7 +27,7 @@ public class ServiceModel {
 
     }
 
-    public ServiceModel(String userId, String serviceType, String serviceName, String price, Uri imageUri, String location) {
+    public ServiceModel(String userId, String serviceType, String serviceName, String price, String imageUri, String location) {
         this.userId = userId;
         this.serviceType = serviceType;
         this.serviceName = serviceName;
@@ -77,11 +77,11 @@ public class ServiceModel {
         this.price = price;
     }
 
-    public Uri getImageUri() {
+    public String getImageUri() {
         return imageUri;
     }
 
-    public void setImageUri(Uri imageUri) {
+    public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
     }
 }
