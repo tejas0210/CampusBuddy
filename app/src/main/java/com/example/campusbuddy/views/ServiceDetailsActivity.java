@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -13,6 +14,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.activity.result.contract.ActivityResultContract;
@@ -52,11 +55,12 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
-public class ServiceDetailsActivity extends AppCompatActivity {
+public class ServiceDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int PICK_IMAGE_REQUEST_CODE = 200;
     ActivityServiceDetailsBinding binding;
     FirebaseUser user;
     FirebaseDatabase database;
+    private Bitmap bitmap;
     DatabaseReference reference;
 //    LocationManager locationManager;
 //    private static final int REQUEST_LOCATION = 1;
@@ -90,23 +94,6 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("images");
 
 
-//        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                pickImage();
-//            }
-//        });
-
-//        IMAGE ADAPTER CODE BELOW...
-
-//        adapter = new ImageAdapter(list);
-//        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
-//        binding.recyclerView.addItemDecoration(dividerItemDecoration);
-//        binding.recyclerView.setAdapter(adapter);
-
-        // FINSIH
-
 
         // DROPDOWN SPINNER CODE BELOW....
         Spinner spinner = findViewById(R.id.my_spinner);
@@ -127,225 +114,68 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         //FINISH
 
 
-        //getting users location...
-
-//        ActivityCompat.requestPermissions(this,
-//                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-//
-//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//            OnGPS();
-//        } else {
-//            getLocation();
-//        }
-//
-//
-//        if (ContextCompat.checkSelfPermission(ServiceDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION);
-//        }
 
         String loc = getIntent().getStringExtra("LocationToSet");
         binding.edtLocation.setText(loc);
 
+        binding.coverImage.setOnClickListener(this);
+
     }
 
-
-//    private void OnGPS() {
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-//            }
-//        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        });
-//        final AlertDialog alertDialog = builder.create();
-//        alertDialog.show();
-//    }
-
-
-//    private void getLocation() {
-//        if (ActivityCompat.checkSelfPermission(
-//                ServiceDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                ServiceDetailsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-//        } else {
-//            Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//            if (locationGPS != null) {
-//                double lat = locationGPS.getLatitude();
-//                double longi = locationGPS.getLongitude();
-//                latitude = String.valueOf(lat);
-//                longitude = String.valueOf(longi);
-//                binding.tvLocation.setText("Your Location: " +
-//                        " " + "Latitude: " + latitude +
-//                        " " + "Longitude: " + longitude);
-//            } else {
-//                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//
-//
-//        user = FirebaseAuth.getInstance().getCurrentUser();
-//        database = FirebaseDatabase.getInstance();
-//        reference = database.getReference("");
-//
-//
-//        binding.btnLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(ServiceDetailsActivity.this, MapsActivity.class));
-//            }
-//        });
-//
-//
-//        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String userId = user.getUid();
-//                String sName = binding.etName.getText().toString();
-//                String price = binding.etPrice.getText().toString();
-//                ServiceModel service = new ServiceModel(userId, serviceType, sName, price);
-//                reference.child(serviceType).push().setValue(service).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-//                            for (Uri imageUri : list) {
-//                                // Create a unique filename for each image using a timestamp
-//                                String filename = System.currentTimeMillis() + ".jpg";
-//
-//                                // Create a reference to the Firebase Storage location where the image will be stored
-//                                StorageReference storageReference = storage.getReference().child(serviceType).child(filename);
-//
-//                                // Upload the image to Firebase Storage
-//                                storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                                    @Override
-//                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                        // Get the download URL for the image
-//                                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                            @Override
-//                                            public void onSuccess(Uri downloadUrl) {
-//                                                // Save the download URL to the Firebase Realtime Database
-//                                                reference.child("Images").push().setValue(downloadUrl.toString());
-//                                            }
-//                                        });
-//                                    }
-//                                });
-//                            }
-//
-//                            Toast.makeText(ServiceDetailsActivity.this, "Added Successfully!!", Toast.LENGTH_SHORT).show();
-//                            binding.etName.setText("");
-//                            binding.etPrice.setText("");
-//                            list.clear();
-//                        }
-//                    }
-//                });
-//            }
-//        });
-//    }
-
-    private void pickImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
-
-
+    private void selectImage(){
+        if(Build.VERSION.SDK_INT<23){
+            getChosenImage();
+        }
+        else if(Build.VERSION.SDK_INT>=23){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1000);
+            }
+            else{
+                getChosenImage();
+            }
+        }
+    }
+    private void getChosenImage(){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent,1000);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==1000 && grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            selectImage();
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            if (data.getClipData() != null) {
-                // Multiple images selected
-                int count = data.getClipData().getItemCount();
-                for (int i = 0; i < count; i++) {
-                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
-                    list.add(imageUri);
-                    // Do something with the image URI, such as load the image into an ImageView
+
+        if(requestCode==1000){
+            if(resultCode==RESULT_OK && data!=null){
+                Uri chosenImage = data.getData();
+                try{
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),chosenImage);
+                    binding.coverImage.setImageBitmap(bitmap);
                 }
-//                adapter.notifyDataSetChanged();
-//                binding.imgCount.setText("Photos ("+list.size()+")");
-
-            } else if (data.getData() != null) {
-                // Single image selected
-                Uri imageUri = data.getData();
-                list.add(imageUri);
-
-//                adapter.notifyDataSetChanged();
-//                binding.imgCount.setText("Photos ("+list.size()+")");
-                // Do something with the image URI, such as load the image into an ImageView
-            }
-            if (adapter != null) {
-                adapter.notifyDataSetChanged();
+                catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         }
     }
 
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.coverImage:
+                selectImage();
+        }
+    }
 }
 
 
-
-
-
-    //Code for setting location on map
-    /*
-        binding.btnLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                LocationListener locationListener = new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        // Handle location changes here
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
-                        LocationModel locationModel = new LocationModel(latitude, longitude);
-                        reference.push().child("Location").setValue(locationModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(ServiceDetailsActivity.this, "Location Added!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-                        // Handle status changes here
-                    }
-
-                    @Override
-                    public void onProviderEnabled(String provider) {
-                        // Handle provider enabled here
-                    }
-
-                    @Override
-                    public void onProviderDisabled(String provider) {
-                        // Handle provider disabled here
-                    }
-                };
-
-
-                if (ActivityCompat.checkSelfPermission(ServiceDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ServiceDetailsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    ActivityCompat.requestPermissions(ServiceDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                    return;
-                }
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                locationManager.removeUpdates(locationListener);
-
-            }
-        });
-
- */

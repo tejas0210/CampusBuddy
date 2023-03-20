@@ -228,9 +228,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
 
             locationToSet = addresses.get(0).getSubLocality()+", "+addresses.get(0).getLocality()+" - "+addresses.get(0).getPostalCode();
-//            addresses.get(0).getLocality()+", "+addresses.get(0).getAdminArea()+", "+addresses.get(0).getCountryName()+
-//            edtState.setText(addresses.get(0).getAdminArea());
-//            edtDistrict.setText(addresses.get(0).getLocality());
 
 
         } catch (IOException e) {

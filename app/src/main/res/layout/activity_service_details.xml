@@ -32,8 +32,26 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <EditText
+
+        <ImageView
+            android:id="@+id/coverImage"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:clickable="true"
             android:layout_marginTop="15dp"
+            android:padding="10dp"
+            app:srcCompat="@drawable/addphoto" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Cover Photo to your service"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"></TextView>
+
+        <EditText
+            android:layout_marginTop="25dp"
             android:id="@+id/et_Name"
             android:gravity="center"
             android:layout_width="match_parent"
