@@ -65,7 +65,9 @@
             android:exported="false" />
         <activity
             android:name=".views.ServiceDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".views.NewServiceActivity"
             android:exported="false"

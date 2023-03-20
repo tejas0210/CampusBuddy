@@ -4,76 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:paddingTop="7dp"
-    android:paddingRight="13dp"
-    android:paddingLeft="13dp"
+    android:theme="@style/Theme.CampusBuddy1"
     tools:context=".views.ServiceDetailsActivity">
 
-
-    <EditText
-        android:layout_marginTop="15dp"
-        android:id="@+id/et_Name"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:hint="Add Name to your service"
-        android:layout_height="wrap_content" />
-    <Spinner
-        android:id="@+id/my_spinner"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:prompt="@string/choose_option" />
-    <EditText
-        android:layout_width="match_parent"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:hint="Add your location"
-        android:layout_height="wrap_content"
-        android:id="@+id/edt_location"/>
-    <EditText
-        android:id="@+id/et_Price"
-        android:hint="Enter Price"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="45dp" />
-<!--    <TextView-->
-<!--        android:id="@+id/tv_location"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:textSize="20dp"-->
-<!--        android:textColor="@color/black"/>-->
-<!--    <TextView-->
-<!--        android:id="@+id/tv_exactLocation"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:textSize="20dp"-->
-<!--        android:textColor="@color/black"/>-->
-<!--    <Button-->
-<!--        android:layout_width="150dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:text="Add Photo"-->
-<!--        android:id="@+id/btn_add" />-->
-<!--    <TextView-->
-<!--        android:id="@+id/img_count"-->
-<!--        android:layout_width="80dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:textSize="15dp">-->
-<!--    </TextView>-->
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/arsenic"
+            app:titleTextColor="@color/white"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/recyclerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="250dp"/>-->
-
-    <Button
-        android:id="@+id/btn_Submit"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Submit" />
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:layout_marginTop="15dp"
+            android:id="@+id/et_Name"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:hint="Add Name to your service"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/my_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/choose_option" />
+        <EditText
+            android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:hint="Add your location"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_location"/>
+        <EditText
+            android:id="@+id/et_Price"
+            android:hint="Enter Price"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_location"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@color/black"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/tv_exactLocation"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@color/black"/>-->
+    <!--    <Button-->
+    <!--        android:layout_width="150dp"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:text="Add Photo"-->
+    <!--        android:id="@+id/btn_add" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/img_count"-->
+    <!--        android:layout_width="80dp"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:textSize="15dp">-->
+    <!--    </TextView>-->
+
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/recyclerView"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="250dp"/>-->
+
+        <Button
+            android:id="@+id/btn_Submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Submit" />
+
+    </LinearLayout>
 
 
 

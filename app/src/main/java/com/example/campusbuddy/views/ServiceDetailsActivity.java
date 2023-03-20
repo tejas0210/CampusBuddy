@@ -15,6 +15,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -26,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -55,50 +58,53 @@ public class ServiceDetailsActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseDatabase database;
     DatabaseReference reference;
-    LocationManager locationManager;
-    private static final int REQUEST_LOCATION = 1;
-    private static final int READ_PERMISSION = 101;
+//    LocationManager locationManager;
+//    private static final int REQUEST_LOCATION = 1;
+//    private static final int READ_PERMISSION = 101;
 
     ImageAdapter adapter;
     private FirebaseStorage storage;
 
 
-
     ArrayList<Uri> list = new ArrayList<Uri>();
-    String latitude, longitude;
+    //    String latitude, longitude;
     String serviceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Register Yourself");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ActionBar actionBar;
-        actionBar = getSupportActionBar();
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#303030"));
-        actionBar.setBackgroundDrawable(colorDrawable);
         binding = ActivityServiceDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Window window = ServiceDetailsActivity.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(ServiceDetailsActivity.this, R.color.arsenic));
+        // assigning ID of the toolbar to a variable
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        // using toolbar as ActionBar
+        setSupportActionBar(toolbar);
+        setTitle("Register Yourself");
+
 
         storage = FirebaseStorage.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("images");
 
 
-
-
-        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickImage();
-            }
-        });
+//        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                pickImage();
+//            }
+//        });
 
 //        IMAGE ADAPTER CODE BELOW...
-        adapter = new ImageAdapter(list);
-        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
-        binding.recyclerView.addItemDecoration(dividerItemDecoration);
-        binding.recyclerView.setAdapter(adapter);
+
+//        adapter = new ImageAdapter(list);
+//        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
+//        binding.recyclerView.addItemDecoration(dividerItemDecoration);
+//        binding.recyclerView.setAdapter(adapter);
+
         // FINSIH
 
 
@@ -123,122 +129,124 @@ public class ServiceDetailsActivity extends AppCompatActivity {
 
         //getting users location...
 
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+//        ActivityCompat.requestPermissions(this,
+//                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+//
+//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            OnGPS();
+//        } else {
+//            getLocation();
+//        }
+//
+//
+//        if (ContextCompat.checkSelfPermission(ServiceDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION);
+//        }
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            OnGPS();
-        } else {
-            getLocation();
-        }
-
-
-        if (ContextCompat.checkSelfPermission(ServiceDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION);
-        }
+        String loc = getIntent().getStringExtra("LocationToSet");
+        binding.edtLocation.setText(loc);
 
     }
 
 
-    private void OnGPS() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                ServiceDetailsActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                ServiceDetailsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        } else {
-            Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (locationGPS != null) {
-                double lat = locationGPS.getLatitude();
-                double longi = locationGPS.getLongitude();
-                latitude = String.valueOf(lat);
-                longitude = String.valueOf(longi);
-                binding.tvLocation.setText("Your Location: " +
-                        " " + "Latitude: " + latitude +
-                        " " + "Longitude: " + longitude);
-            } else {
-                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
-            }
-        }
+//    private void OnGPS() {
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//            }
+//        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.cancel();
+//            }
+//        });
+//        final AlertDialog alertDialog = builder.create();
+//        alertDialog.show();
+//    }
 
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-
-        database = FirebaseDatabase.getInstance();
-        reference = database.getReference("");
-
-
-        binding.btnLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ServiceDetailsActivity.this, MapsActivity.class));
-            }
-        });
-
-
-        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String userId = user.getUid();
-                String sName = binding.etName.getText().toString();
-                String price = binding.etPrice.getText().toString();
-                ServiceModel service = new ServiceModel(userId,serviceType ,sName, price);
-                reference.child(serviceType).push().setValue(service).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            for (Uri imageUri : list) {
-                                // Create a unique filename for each image using a timestamp
-                                String filename = System.currentTimeMillis() + ".jpg";
-
-                                // Create a reference to the Firebase Storage location where the image will be stored
-                                StorageReference storageReference = storage.getReference().child(serviceType).child(filename);
-
-                                // Upload the image to Firebase Storage
-                                storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        // Get the download URL for the image
-                                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                            @Override
-                                            public void onSuccess(Uri downloadUrl) {
-                                                // Save the download URL to the Firebase Realtime Database
-                                                reference.child("Images").push().setValue(downloadUrl.toString());
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-
-                            Toast.makeText(ServiceDetailsActivity.this, "Added Successfully!!", Toast.LENGTH_SHORT).show();
-                            binding.etName.setText("");
-                            binding.etPrice.setText("");
-                            list.clear();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-
+//    private void getLocation() {
+//        if (ActivityCompat.checkSelfPermission(
+//                ServiceDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+//                ServiceDetailsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+//        } else {
+//            Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//            if (locationGPS != null) {
+//                double lat = locationGPS.getLatitude();
+//                double longi = locationGPS.getLongitude();
+//                latitude = String.valueOf(lat);
+//                longitude = String.valueOf(longi);
+//                binding.tvLocation.setText("Your Location: " +
+//                        " " + "Latitude: " + latitude +
+//                        " " + "Longitude: " + longitude);
+//            } else {
+//                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//
+//        user = FirebaseAuth.getInstance().getCurrentUser();
+//        database = FirebaseDatabase.getInstance();
+//        reference = database.getReference("");
+//
+//
+//        binding.btnLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(ServiceDetailsActivity.this, MapsActivity.class));
+//            }
+//        });
+//
+//
+//        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String userId = user.getUid();
+//                String sName = binding.etName.getText().toString();
+//                String price = binding.etPrice.getText().toString();
+//                ServiceModel service = new ServiceModel(userId, serviceType, sName, price);
+//                reference.child(serviceType).push().setValue(service).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            for (Uri imageUri : list) {
+//                                // Create a unique filename for each image using a timestamp
+//                                String filename = System.currentTimeMillis() + ".jpg";
+//
+//                                // Create a reference to the Firebase Storage location where the image will be stored
+//                                StorageReference storageReference = storage.getReference().child(serviceType).child(filename);
+//
+//                                // Upload the image to Firebase Storage
+//                                storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                                    @Override
+//                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                        // Get the download URL for the image
+//                                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                            @Override
+//                                            public void onSuccess(Uri downloadUrl) {
+//                                                // Save the download URL to the Firebase Realtime Database
+//                                                reference.child("Images").push().setValue(downloadUrl.toString());
+//                                            }
+//                                        });
+//                                    }
+//                                });
+//                            }
+//
+//                            Toast.makeText(ServiceDetailsActivity.this, "Added Successfully!!", Toast.LENGTH_SHORT).show();
+//                            binding.etName.setText("");
+//                            binding.etPrice.setText("");
+//                            list.clear();
+//                        }
+//                    }
+//                });
+//            }
+//        });
+//    }
 
     private void pickImage() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -263,7 +271,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
                     // Do something with the image URI, such as load the image into an ImageView
                 }
 //                adapter.notifyDataSetChanged();
-                binding.imgCount.setText("Photos ("+list.size()+")");
+//                binding.imgCount.setText("Photos ("+list.size()+")");
 
             } else if (data.getData() != null) {
                 // Single image selected
@@ -271,7 +279,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
                 list.add(imageUri);
 
 //                adapter.notifyDataSetChanged();
-                binding.imgCount.setText("Photos ("+list.size()+")");
+//                binding.imgCount.setText("Photos ("+list.size()+")");
                 // Do something with the image URI, such as load the image into an ImageView
             }
             if (adapter != null) {
@@ -279,6 +287,14 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             }
         }
     }
+
+
+
+}
+
+
+
+
 
     //Code for setting location on map
     /*
@@ -333,4 +349,3 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         });
 
  */
-}

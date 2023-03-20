@@ -37,7 +37,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.myViewHo
 
         ServiceModel serviceModel = list.get(position);
         holder.sName.setText(serviceModel.getServiceName());
-        holder.price.setText(serviceModel.getPrice());
+//        holder.price.setText(serviceModel.getPrice());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +58,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.myViewHo
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             sName = itemView.findViewById(R.id.tv_name);
-            price = itemView.findViewById(R.id.tv_price);
+//            price = itemView.findViewById(R.id.tv_price);
         }
     }
 }

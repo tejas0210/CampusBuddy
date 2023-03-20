@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Campus Buddy</string>
     <string name="choose_option">Choose Option</string>
+    <color name="textColor">@color/black</color>
 
     <string-array name="my_spinner_options">
         <item>Fitness Centre </item>
