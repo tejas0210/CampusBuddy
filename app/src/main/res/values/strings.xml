@@ -4,6 +4,7 @@
     <color name="textColor">@color/black</color>
 
     <string-array name="my_spinner_options">
+        <item>Choose Service </item>
         <item>Fitness Centre </item>
         <item>Inn</item>
         <item>Transport</item>

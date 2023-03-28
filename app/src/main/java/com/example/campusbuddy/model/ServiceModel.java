@@ -1,29 +1,27 @@
 package com.example.campusbuddy.model;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
+
+import java.net.URI;
 import java.util.ArrayList;
 
 public class ServiceModel {
     String userId;
-
     String serviceType;
     String serviceName;
     String price;
     String imageUri;
     String location;
 
-
-
-
-
     public ServiceModel(){
-
     }
-    public ServiceModel(String userId, String serviceType, String serviceName, String price) {
+    public ServiceModel(String userId, String serviceType, String serviceName, String price, String location) {
         this.userId = userId;
         this.serviceName = serviceName;
         this.price = price;
         this.serviceType = serviceType;
+        this.location = location;
 
     }
 
@@ -37,12 +35,12 @@ public class ServiceModel {
     }
 
 
-    public String getLocation() {
-        return location;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getServiceType() {
@@ -51,14 +49,6 @@ public class ServiceModel {
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getServiceName() {
@@ -83,5 +73,13 @@ public class ServiceModel {
 
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

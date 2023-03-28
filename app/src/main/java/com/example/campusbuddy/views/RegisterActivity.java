@@ -29,7 +29,6 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity  implements View.OnClickListener{
 
-
     FirebaseAuth auth;
     DatabaseReference reference;
     ProgressDialog dialog;
