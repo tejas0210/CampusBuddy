@@ -61,6 +61,7 @@
             android:id="@+id/my_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black"
             android:prompt="@string/choose_option" />
         <EditText
             android:layout_width="match_parent"

@@ -228,8 +228,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
 
             locationToSet = addresses.get(0).getSubLocality()+", "+addresses.get(0).getLocality()+" - "+addresses.get(0).getPostalCode();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -255,4 +253,3 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         LocationListener.super.onProviderDisabled(provider);
     }
 }
-
