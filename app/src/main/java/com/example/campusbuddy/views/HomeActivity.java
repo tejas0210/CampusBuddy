@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     LocationManager locationManager;
     private static final int REQUEST_LOCATION = 1;
     private static final int READ_PERMISSION = 101;
-    String latitude, longitude, locationToSet;
+    String locationToSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,23 +76,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         binding.newOpenings.setOnClickListener(this::onClick);
 
 
-//        SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
-//        String lastActivity = prefs.getString("lastActivity", null);
-
-//        if (lastActivity != null) {
-//            try {
-//                Class<?> activityClass = Class.forName(lastActivity);
-//                Intent intent = new Intent(this, activityClass);
-//                startActivity(intent);
-//            } catch (ClassNotFoundException e) {
-//
-//            }
-//        } else {
-//            // If no last activity found, start default activity
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
-//        }
-
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
@@ -109,8 +92,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION);
         }
 
-        checkLocationEnabledOrNot();
         getLocation();
+        checkLocationEnabledOrNot();
+
     }
 
 //
@@ -129,7 +113,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 5, this);
-            //LocationManager.NETWORK_PROVIDER, 500, 5, this
 
         }
         catch (SecurityException e){
@@ -228,6 +211,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
 
             locationToSet = addresses.get(0).getSubLocality()+", "+addresses.get(0).getLocality()+" - "+addresses.get(0).getPostalCode();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -253,3 +237,4 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         LocationListener.super.onProviderDisabled(provider);
     }
 }
+

@@ -1,22 +1,36 @@
 package com.example.campusbuddy.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.campusbuddy.R;
 import com.example.campusbuddy.adapters.MyPagerAdapter;
-import com.example.campusbuddy.databinding.ActivityFitnessDataBinding;
+import com.example.campusbuddy.databinding.ActivityDetailsBinding;
 import com.google.android.material.tabs.TabLayout;
 
-public class Fitness_Data_Activity extends AppCompatActivity {
-    ActivityFitnessDataBinding binding;
+public class DetailsActivity extends AppCompatActivity {
+    ActivityDetailsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityFitnessDataBinding.inflate(getLayoutInflater());
+        binding = ActivityDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Window window = DetailsActivity.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(DetailsActivity.this, R.color.arsenic));
+        // assigning ID of the toolbar to a variable
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        // using toolbar as ActionBar
+        setSupportActionBar(toolbar);
+        setTitle("Fitness Centres");
 
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Details"));

@@ -59,7 +59,6 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
     StorageReference storageReference;
     DatabaseReference reference;
 
-    Uri selectedImageUri;
 
     String sName,price,location;
     private FirebaseStorage storage;
