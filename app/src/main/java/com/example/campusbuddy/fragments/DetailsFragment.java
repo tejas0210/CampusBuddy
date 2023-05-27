@@ -26,11 +26,12 @@ public class DetailsFragment extends Fragment {
     FragmentDetailsBinding binding;
     FirebaseDatabase database;
     String rating;
-    String dbRating;
-    
+    String dbRating="0";
     FirebaseUser user;
-
     DatabaseReference reference;
+    String serviceType;
+    String serviceTypeName;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,14 +61,11 @@ public class DetailsFragment extends Fragment {
         });
 
 
-        ServiceDetailsActivity serviceDetailsActivity = new ServiceDetailsActivity();
-        Intent intent = new Intent();
-        String serviceType = intent.getStringExtra("serviceType");
 
         binding.btnRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                reference.child(serviceType+ "Rating").child(user.getUid()).setValue(rating+dbRating).addOnCompleteListener(new OnCompleteListener<Void>() {
+                reference.child(serviceType +" Rating").child(serviceTypeName+" Rating").setValue(rating+dbRating).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
@@ -78,5 +76,13 @@ public class DetailsFragment extends Fragment {
             }
         });
         return binding.getRoot();
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            serviceType = getArguments().getString("serviceType");
+            serviceTypeName = getArguments().getString("serviceTypeName");
+        }
     }
 }
