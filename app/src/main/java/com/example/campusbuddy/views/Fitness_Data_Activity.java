@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.campusbuddy.R;
 import com.example.campusbuddy.adapters.MyPagerAdapter;
 import com.example.campusbuddy.databinding.ActivityFitnessDataBinding;
+import com.example.campusbuddy.fragments.DetailsFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class Fitness_Data_Activity extends AppCompatActivity {
@@ -19,6 +20,16 @@ public class Fitness_Data_Activity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
+
+        Bundle bundle = new Bundle();
+        bundle.putString("serviceType", getIntent().getStringExtra("serviceType"));
+        bundle.putString("serviceTypeName", getIntent().getStringExtra("serviceTypeName"));
+// set MyFragment Arguments
+        DetailsFragment myFragment = new DetailsFragment();
+        myFragment.setArguments(bundle);
+
+
+        getSupportActionBar().setTitle(getIntent().getStringExtra("serviceTypeName")+ getIntent().getStringExtra("serviceType"));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Details"));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("About"));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Photos"));

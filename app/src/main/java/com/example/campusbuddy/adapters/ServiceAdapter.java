@@ -2,9 +2,6 @@ package com.example.campusbuddy.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.myViewHolder> {
@@ -78,6 +71,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.myViewHo
             public void onClick(View view) {
                 Intent i = new Intent(context, Fitness_Data_Activity.class);
                 i.putExtra("serviceType", serviceType);
+                i.putExtra("serviceTypeName", serviceModel.getServiceName());
                 context.startActivity(i);
             }
         });
