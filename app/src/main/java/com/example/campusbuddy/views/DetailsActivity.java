@@ -1,10 +1,14 @@
 package com.example.campusbuddy.views;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -32,17 +36,20 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Fitness Centres");
 
+//        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(this);
+//        binding.viewPager.setAdapter(myPagerAdapter);
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Details"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("About"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Photos"));
-        binding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+//        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Details"));
+//        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("About"));
+//        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Photos"));
+//        binding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+//
         final MyPagerAdapter adapter = new MyPagerAdapter(this,getSupportFragmentManager(), binding.tabLayout.getTabCount());
         binding.viewPager.setAdapter(adapter);
-
-        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout));
-
+//
+//        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout));
+//
         binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -56,6 +63,24 @@ public class DetailsActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                binding.tabLayout.getTabAt(position).select();
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
             }
         });

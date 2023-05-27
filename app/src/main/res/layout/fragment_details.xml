@@ -1,32 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.DetailsFragment">
+    tools:context=".fragments.DetailsFragment"
+    android:orientation="vertical"
+    android:theme="@style/Theme.CampusBuddy1">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/tv_moreDetails"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="30dp"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Review this service"
+        android:textSize="16sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/edtReview"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        android:textSize="15sp"
+        android:gravity="start"
+        android:inputType="textMultiLine"
+        android:background="@drawable/edtbg"
+        android:layout_below="@id/tv_moreDetails"></EditText>
+
+    <TextView
+        android:id="@+id/txtRating"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ratings"
+        android:textSize="16sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/black"
+        android:layout_below="@id/edtReview"/>
 
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_moreDetails"/>
+        android:layout_below="@+id/txtRating"
+        android:layout_marginLeft="-18dp"
+        android:layout_marginTop="-8dp"
+        android:layout_marginRight="15dp"
+        android:progressTint="#FFD700"
+        android:layout_gravity="start"
+        android:scaleX=".7"
+        android:scaleY=".7" />
     <Button
         android:id="@+id/btn_Rate"
-        android:layout_width="100dp"
-        android:text="Rate"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:padding="10dp"
+        android:layout_gravity=""
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="295dp"
+        android:background="@drawable/btn_bg"
         android:layout_below="@id/ratingBar">
 
     </Button>
 
-</RelativeLayout>
+</LinearLayout>

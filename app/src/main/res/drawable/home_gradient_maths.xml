@@ -6,10 +6,14 @@
     <gradient
         android:angle="0"
         android:centerX="0%"
-        android:startColor="#FF416C"
-        android:endColor="#8A52E9"
+        android:startColor="@color/primaryGreen"
+        android:centerColor="@color/primaryGreen"
+        android:endColor="#000000"
         android:type="linear"
         />
+
+<!--    #FF416C-->
+<!--    #8A52E9-->
 
     <size
         android:width="334dp"

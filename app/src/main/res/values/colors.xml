@@ -43,4 +43,15 @@
     <color name="blueSecondary">#379EF1</color>
     <color name="arsenic">#303030</color>
     <color name="splashScreen">#C10504</color>
+
+    <color name="lightBlue">#ADD8E6</color>
+    <color name="darkBlue">#00008b</color>
+
+    <color name="primaryGreen">#54C85A</color>
+    <color name="grey">#757575</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

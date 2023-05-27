@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
         Window window = RegisterActivity.this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(RegisterActivity.this, R.color.arsenic));
+        window.setStatusBarColor(ContextCompat.getColor(RegisterActivity.this, R.color.black));
 
 
         auth = FirebaseAuth.getInstance();
@@ -72,6 +72,7 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
 
             case R.id.txtSignIn:
                 transitionToSignIn();
+                finish();
                 break;
 
         }
@@ -80,7 +81,6 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
     public void transitionToSignIn(){
         Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
         startActivity(intent);
-        finish();
     }
     private void register(final String username, String email, String password){
 

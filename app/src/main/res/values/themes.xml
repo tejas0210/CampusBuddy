@@ -13,14 +13,45 @@
         <item name="android:statusBarColor">@color/arsenic</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- Customize your theme here. -->
+        <item name="android:textViewStyle">@style/InterTextViewStyle</item>
+        <item name="android:buttonStyle">@style/InterButtonStyle</item>
+        <item name="editTextStyle">@style/InterEditViewStyle</item>
+
     </style>
 
     <style name="Theme.CampusBuddy1" parent="Theme.AppCompat.Light.NoActionBar">
-<!--        <item name="windowActionBar">false</item>-->
-<!--        <item name="windowNoTitle">true</item>-->
+        <!--        <item name="windowActionBar">false</item>-->
+        <!--        <item name="windowNoTitle">true</item>-->
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:textViewStyle">@style/InterTextViewStyle</item>
+        <item name="android:buttonStyle">@style/InterButtonStyle</item>
+        <item name="editTextStyle">@style/InterEditViewStyle</item>
 
+    </style>
+
+    <style name="InterTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <style name="InterEditViewStyle" parent="android:Widget.EditText">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <style name="InterButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <style name="Theme.CampusBuddy.Fullscreen" parent="Theme.CampusBuddy">
+        <item name="android:actionBarStyle">@style/Widget.Theme.CampusBuddy.ActionBar.Fullscreen
+        </item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.CampusBuddy.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
     </style>
 </resources>

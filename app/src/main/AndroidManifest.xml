@@ -17,15 +17,21 @@
         android:theme="@style/Theme.CampusBuddy"
         tools:targetApi="31">
         <activity
+            android:name="views.SignUpOrSignIn"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/title_activity_sign_up_or_sign_in"
+            android:theme="@style/Theme.CampusBuddy.Fullscreen" />
+        <activity
             android:name=".views.DetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".views.PlayAreaActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:exported="false" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".views.LifestyleActivity"
             android:exported="false"
@@ -45,7 +51,7 @@
             android:name=".views.CollegeClubsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".views.TransportActivity"
             android:exported="false"
@@ -65,6 +71,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name=".views.MapsActivity"
@@ -73,7 +82,7 @@
             android:name=".views.ServiceDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".views.NewServiceActivity"
             android:exported="false"
@@ -82,15 +91,16 @@
             android:name=".views.HomeActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".views.SignUpOrSignIn"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name=".views.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
