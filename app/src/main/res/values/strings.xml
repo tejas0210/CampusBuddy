@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Campus Buddy</string>
-    <string name="choose_option">Choose Option</string>
+    <string name="choose_option">Select your service type</string>
     <color name="textColor">@color/black</color>
 
     <string-array name="my_spinner_options">
@@ -16,4 +16,8 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_sign_up_or_sign_in">SignUpOrSignIn</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
+

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -12,6 +10,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="parent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -19,7 +18,7 @@
 
     <style name="parent.contentLayout">
         <item name="android:background">@color/contentBodyColor</item>
-<!--        <item name="android:padding">@dimen/normalPadding</item>-->
+        <!--        <item name="android:padding">@dimen/normalPadding</item>-->
     </style>
 
     <style name="viewParent.headerText">
@@ -57,6 +56,15 @@
 
     <style name="DarkModeHidden">
         <item name="android:visibility">visible</item>
+    </style>
+
+    <style name="Widget.Theme.CampusBuddy.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.Theme.CampusBuddy.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
 </resources>

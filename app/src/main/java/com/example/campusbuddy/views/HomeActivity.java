@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     LocationManager locationManager;
     private static final int REQUEST_LOCATION = 1;
     private static final int READ_PERMISSION = 101;
-    String latitude, longitude, locationToSet;
+    String locationToSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Window window = HomeActivity.this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(HomeActivity.this, R.color.white));
+        window.setStatusBarColor(ContextCompat.getColor(HomeActivity.this, R.color.black));
 
         // For making our toolbar as default action bar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -76,41 +76,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         binding.newOpenings.setOnClickListener(this::onClick);
 
 
-//        SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
-//        String lastActivity = prefs.getString("lastActivity", null);
-
-//        if (lastActivity != null) {
-//            try {
-//                Class<?> activityClass = Class.forName(lastActivity);
-//                Intent intent = new Intent(this, activityClass);
-//                startActivity(intent);
-//            } catch (ClassNotFoundException e) {
+//        ActivityCompat.requestPermissions(this,
+//                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 //
-//            }
+//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            checkLocationEnabledOrNot();
 //        } else {
-//            // If no last activity found, start default activity
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
+//            getLocation();
+//        }
+//
+//
+//        if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION);
 //        }
 
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            checkLocationEnabledOrNot();
-        } else {
-            getLocation();
-        }
-
-
-        if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION);
-        }
-
+        grantUriPermission();
         checkLocationEnabledOrNot();
         getLocation();
+
     }
 
 //
@@ -128,8 +113,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
+
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 5, this);
-            //LocationManager.NETWORK_PROVIDER, 500, 5, this
 
         }
         catch (SecurityException e){
@@ -163,6 +148,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                 }
             }).setNegativeButton("Cancel",null).show();
+        }
+
+
+    }
+
+    private void grantUriPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
         }
     }
 
@@ -228,6 +222,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
 
             locationToSet = addresses.get(0).getSubLocality()+", "+addresses.get(0).getLocality()+" - "+addresses.get(0).getPostalCode();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -253,3 +248,4 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         LocationListener.super.onProviderDisabled(provider);
     }
 }
+

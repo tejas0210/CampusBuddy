@@ -47,7 +47,7 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 rating = String.valueOf(v);
-                Toast.makeText(getContext(), rating, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), rating, Toast.LENGTH_SHORT).show();
             }
         });
         reference.child("userRating").child(user.getUid()).addValueEventListener(new ValueEventListener() {
@@ -69,7 +69,7 @@ public class DetailsFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-                            Toast.makeText(getContext(), "Thanks For Rating!!"+ rating, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Thanks For Rating!!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.PhotosFragment">
+    tools:context=".fragments.PhotosFragment"
+    android:theme="@style/Theme.CampusBuddy1">
 
 
     <androidx.recyclerview.widget.RecyclerView

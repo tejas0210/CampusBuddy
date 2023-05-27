@@ -59,7 +59,6 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
     StorageReference storageReference;
     DatabaseReference reference;
 
-    Uri selectedImageUri;
 
     String sName,price,location;
     private FirebaseStorage storage;
@@ -79,8 +78,8 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
         // using toolbar as ActionBar
         setSupportActionBar(toolbar);
         setTitle("Register Yourself");
-        sName = binding.etName.getText().toString();
-        price = binding.etPrice.getText().toString();
+        sName = binding.edtName.getText().toString();
+        price = binding.edtPrice.getText().toString();
         location = binding.edtLocation.getText().toString();
 
 
@@ -112,7 +111,7 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
 
         String loc = getIntent().getStringExtra("LocationToSet");
         binding.edtLocation.setText(loc);
-
+        binding.btnSubmit.setOnClickListener(this);
         binding.coverImage.setOnClickListener(this);
 
     }
@@ -125,7 +124,7 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
             case R.id.coverImage:
 //                imageChooser();
                 Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
-            case R.id.btn_Submit:
+            case R.id.btnSubmit:
 
                 if (TextUtils.isEmpty(sName) || TextUtils.isEmpty(price) || TextUtils.isEmpty(location)){
                     Toast.makeText(ServiceDetailsActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
@@ -158,8 +157,8 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(ServiceDetailsActivity.this, "Added Successfully!!", Toast.LENGTH_SHORT).show();
-                            binding.etName.setText("");
-                            binding.etPrice.setText("");
+                            binding.edtName.setText("");
+                            binding.edtPrice.setText("");
                         }
                     }
                 });

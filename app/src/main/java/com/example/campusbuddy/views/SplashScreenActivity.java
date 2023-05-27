@@ -62,7 +62,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    Intent intent = new Intent(SplashScreenActivity.this,LoginActivity.class);
+//                    Intent intent = new Intent(SplashScreenActivity.this,LoginActivity.class);
+
+                    // Temporary intent
+                    Intent intent = new Intent(SplashScreenActivity.this,HomeActivity.class);
                     startActivity(intent);
                     finish();
                 }
